@@ -7,7 +7,7 @@ This MaxScript makes it very easy to apply Object ID's and store the MultiMatte 
 Objects are selected within the grid table. If objects and layers in your scene are not recognized by its name this script will not be much use.
 
 
-#### Manual
+### Manual
 
 - **Add Button** will add another additional numbered ID button.
 - **Refresh** reloads the objects in your scene. If an ID in your scene has been manually changed it will recognize it and add additional buttons if required.
@@ -16,11 +16,11 @@ Objects are selected within the grid table. If objects and layers in your scene 
 - **Elements** this will create the render elements based on your selection. If **Collect** is checked the elements will be created accordingly.
 
 
-#### Requirements
+### Requirements
 
 To create the render elements this script needs V-Ray since MultiMatteElement is part of V-Ray.
 
 
-#### Changelog
+### Changelog
 
 v1.0 (Initial release)
