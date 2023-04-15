@@ -26,5 +26,6 @@ To create the render elements this script needs V-Ray since MultiMatteElement is
 v1.0.1
 
 - fixed anchor problem
+- added a check if MultiMatte element is available and hide the 'Elements' button if not
 
 v1.0 (Initial release)
