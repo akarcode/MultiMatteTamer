@@ -23,4 +23,8 @@ To create the render elements this script needs V-Ray since MultiMatteElement is
 
 ### Changelog
 
+v1.0.1
+
+- fixed anchor problem
+
 v1.0 (Initial release)
