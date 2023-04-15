@@ -152,7 +152,7 @@ global mmtForm
 				
 			element = re.GetRenderElement (re.NumRenderElements() - 1)
 			
-			if classof element == MultiMatteElement and matchpattern element.ElementName pattern:"*tamertest*" do (
+			if classof element == MultiMatteElement and element.ElementName == "tamertest" do (
 				
 				re.RemoveRenderElement element
 				
