@@ -138,7 +138,32 @@ global mmtForm
 		
 	)
 
-	borderPanel.Controls.Add dataGrid 
+	borderPanel.Controls.Add dataGrid
+	
+	
+	-- check if multimatte element is available and hide button if not
+	fn checkMultiMatte = (
+		
+		re = maxOps.GetCurRenderElementMgr()
+
+		try (
+			
+			re.addRenderElement (MultiMatteElement ElementName:("tamertest"))
+				
+			element = re.GetRenderElement (re.NumRenderElements() - 1)
+			
+			if classof element == MultiMatteElement and matchpattern element.ElementName pattern:"*tamertest*" do (
+				
+				re.RemoveRenderElement element
+				
+			)
+
+		) catch (
+
+			elementButton.Visible = false
+
+		)
+	)
 	
 	
 	--select objects and renderable shapes
@@ -745,6 +770,9 @@ global mmtForm
 	
 	--release first button focus inside flowpanel on loading. purely visual!
 	flowPanel.Focus()
+
+	
+	checkMultiMatte()
 	
 	
 	mmtForm.showModeless()
