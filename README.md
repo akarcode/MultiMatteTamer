@@ -18,7 +18,7 @@ Objects are selected within the grid table. If objects and layers in your scene 
 
 ### Requirements
 
-To create the render elements this script needs V-Ray since MultiMatteElement is part of V-Ray.
+To create the render elements this script needs V-Ray since MultiMatteElement is part of V-Ray. Or else the 'Elements' button will be hidden.
 
 
 ### Changelog
