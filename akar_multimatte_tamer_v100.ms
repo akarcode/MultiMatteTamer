@@ -91,7 +91,7 @@ global mmtForm
 	borderPanel = dotnetobject "Panel"
 	borderPanel.Location = dotNetObject pointClass 8 94
 	borderPanel.Size = dotNetObject sizeClass 788 400
-	borderPanel.Anchor = dotNet.CombineEnums borderPanel.Anchor.Top dataGrid.Anchor.Bottom borderPanel.Anchor.Left borderPanel.Anchor.Right
+	borderPanel.Anchor = dotNet.CombineEnums borderPanel.Anchor.Top borderPanel.Anchor.Bottom borderPanel.Anchor.Left borderPanel.Anchor.Right
 	borderPanel.Padding = dotNetObject "System.Windows.Forms.Padding" 1
 	borderPanel.BackColor = colorBorder
 	mmtForm.Controls.Add borderPanel
