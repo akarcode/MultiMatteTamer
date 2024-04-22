@@ -1,5 +1,4 @@
-global mmtForm
-(
+global mmtForm (
 	
 	if mmtForm != undefined do mmtForm.close()
 	
@@ -19,7 +18,7 @@ global mmtForm
 	colorMouseOver = colorClass 56 56 56
 	
 	mmtForm = dotNetObject "maxCustomControls.MaxForm"
-	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.0.1"
+	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.1.0"
 	mmtForm.Size = dotNetObject sizeClass 826 600
 	mmtForm.MinimumSize = dotNetObject sizeClass 562 260
 	mmtForm.StartPosition = centerClass
@@ -105,7 +104,7 @@ global mmtForm
 	dataGrid.AutoSizeColumnsMode = dataGrid.AutoSizeColumnsMode.Fill
 	dataGrid.AllowUserToResizeRows = false
 	dataGrid.AllowUserToResizeColumns = true
-	dataGrid.AllowUserToOrderColumns = false -- sort is lost since the grid is refilled on every event
+	dataGrid.AllowUserToOrderColumns = true
 	dataGrid.AllowUserToAddRows = false
 	dataGrid.ColumnHeadersHeight = 34
 	dataGrid.ColumnHeadersHeightSizeMode = dataGrid.ColumnHeadersHeightSizeMode.DisableResizing
@@ -124,11 +123,11 @@ global mmtForm
 		
 		Column = dotNetObject "DataGridViewTextBoxColumn"
 		Column.HeaderText = Names
-		Column.SortMode = Column.SortMode.NotSortable
+		Column.SortMode = Column.SortMode.Automatic
 		
 		if Names == "OID" do (
 			
-			Column.ValueType = dotNetClass "System.Single"
+			Column.ValueType = dotNetClass "System.Int16"
 			Column.AutoSizeMode = Column.AutoSizeMode.None
 			Column.Width = 50
 			
@@ -180,6 +179,8 @@ global mmtForm
 																		and o.render_renderable == true) \
 																		or superclassof o == GeometryClass \
 																		and classof o != Targetobject \
+																		and classof o != VRayDecal \
+																		and classof o != VRayClipper \
 																		and o.ishidden != true \
 																		) collect o
 		
@@ -230,18 +231,6 @@ global mmtForm
 	
 	fn refreshGrid = (
 		
-		-- collecting selected index numbers
-		selectedRows = #()
-		for i = 0 to (dataGrid.SelectedRows.Count - 1) do (
-			
-			append selectedRows dataGrid.SelectedRows.Item[i].Index
-			
-		)
-		
-		
-		dataGrid.Rows.Clear()
-		
-		
 		for i in getSelection() do (
 			
 			Row = dotNetObject "DataGridViewRow"
@@ -252,96 +241,78 @@ global mmtForm
 			Row.Cells.Item[2].Value = i.gbufferChannel
 			
 		)
-		
-		-- safety IF, if 'selected' changed the grid items.
-		if (amax selectedRows) != undefined and (amax selectedRows) < dataGrid.Rows.Count do (
-			
-			dataGrid.Rows.Item[0].selected = false
-			
-			for index in selectedRows do (
-				
-				dataGrid.Rows.Item[index].Selected = true
-				
-			)
-		)
 	)
+	
 		
+	fn setCellColor sender args = (
 		
-	fn gridColor value = (
-		
-		index = (dataGrid.Rows.Item[value].Index)
-		
-		grabColor = dataGrid.Rows.Item[index].Cells.Item[2].Value
-		
-		tempColor = flowPanel.Controls.Item[grabColor].BackColor
-		
-		dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionForeColor = colorClass 0 0 0
-		dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionForeColor = colorClass 255 255 255
-		
-		if tempColor.R == 135 then (
+		if args.ColumnIndex == 2 do (
 			
-			if int(mod value 2) == 0 then (
+			if args.Value == 0 then (
 				
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.BackColor = colorClass 255 225 225
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 180 125 125
+				-- Neutral:
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					try ( args.CellStyle.BackColor = colorClass 255 255 255 ) catch ()
+					
+				) else (
+					
+					try ( args.CellStyle.BackColor = colorClass 235 235 235 ) catch ()
+					
+				)
+				
+				try ( args.CellStyle.SelectionBackColor = colorClass 130 130 130 ) catch ()
 			
+			) else if int(mod args.Value 3) == 0 then (
+				
+				-- Blue:
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					try ( args.CellStyle.BackColor = colorClass 225 225 255 ) catch ()
+				
+				) else (
+					
+					try ( args.CellStyle.BackColor = colorClass 190 190 225 ) catch ()
+					
+				)
+				
+				try ( args.CellStyle.SelectionBackColor = colorClass 125 125 180 ) catch ()
+				
+			) else if int(mod (args.Value + 1) 3) == 0 then (
+				
+				-- Green:
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					try ( args.CellStyle.BackColor = colorClass 225 255 225 ) catch ()
+				
+				) else (
+					
+					try ( args.CellStyle.BackColor = colorClass 190 225 190 ) catch ()
+					
+				)
+				
+				try ( args.CellStyle.SelectionBackColor = colorClass 125 180 125 ) catch ()
+				
 			) else (
-			
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.BackColor = colorClass 245 215  215
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 180 125 125
--- 				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 170 115 115
 				
-			)
-			
-		) else if tempColor.G == 135 then (
-			
-			if int(mod value 2) == 0 then (
+				-- Red:
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					try ( args.CellStyle.BackColor = colorClass 255 225 225 ) catch ()
 				
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.BackColor = colorClass 225 255 225
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 125 180 125
-			
-			) else (
-			
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.BackColor = colorClass 215 245 215
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 125 180 125
--- 				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 115 170 115
+				) else (
+					
+					try ( args.CellStyle.BackColor = colorClass 225 190 190 ) catch ()
+					
+				)
 				
-			)
-			
-		) else if tempColor.B == 135 then (
-			
-			if int(mod value 2) == 0 then (
-				
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.BackColor = colorClass 225 225 255
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 125 125 180
-			
-			) else (
-			
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.BackColor = colorClass 215 215 245
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 125 125 180
--- 				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 115 115 170
-				
-			)
-			
-		) else (
-			
-			if int(mod value 2) == 0 then (
-				
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.BackColor = colorClass 255 255 255
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 130 130 130
-			
-			) else (
-			
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.BackColor = colorClass 235 235 235
-				dataGrid.Rows.Item[index].Cells.Item[2].Style.SelectionBackColor = colorClass 120 120 120
+				try ( args.CellStyle.SelectionBackColor = colorClass 180 125 125 ) catch ()
 				
 			)
 		)
 	)
 	
 	fn colorizeButtons = (
-		
-		refreshGrid()
 		
 		if collectCheckBox.checked == false then (
 			
@@ -413,16 +384,10 @@ global mmtForm
 				)
 			)
 		)
-		
-		for i = 0 to (dataGrid.rows.count - 1) do (
-			
-			gridColor i
-			
-		)
 	)
 
 	
-	fn resizeEvent Sender Args = (
+	fn resizeEvent sender args = (
 
 		mmtForm.MinimumSize = dotNetObject sizeClass 562 (dataGrid.Location.Y + 350)
 		borderPanel.Height = (mmtForm.Height - flowPanel.Size.Height - 119)
@@ -438,7 +403,7 @@ global mmtForm
 			index = (dataGrid.SelectedRows.Item[i].Index)
 			
 			(getNodeByName dataGrid.Rows.Item[index].Cells.Item[0].Value).gbufferChannel = sender.Name as integer
-			dataGrid.Rows.Item[index].Cells.Item[2].Value = sender.Name
+			dataGrid.Rows.Item[index].Cells.Item[2].Value = sender.Name as integer
 			
 		)
 		
@@ -497,7 +462,6 @@ global mmtForm
 		dotNet.AddEventHandler newButton "Click" checkButton
 		dotNet.SetLifeTimeControl newButton #dotNet
 		
-		
 		if colorize == true do (
 			
 			colorizeButtons()
@@ -510,18 +474,10 @@ global mmtForm
 		
 	)
 	
-	fn checkSelect = (
-		
-		dataGrid.ClearSelection()
-		
-		colorizeButtons()
-		
-	)
-	
 	
 	fn refreshAll = (
 		
-		dataGrid.ClearSelection()
+		dataGrid.Rows.Clear()
 		
 		-- check if a new higher ID has been created
 		currentOID = flowPanel.Controls.Count
@@ -540,6 +496,7 @@ global mmtForm
 			)
 		)
 		
+		refreshGrid()
 		colorizeButtons()
 		
 	)
@@ -743,9 +700,69 @@ global mmtForm
 			)
 		)
 	)
+	
+	
+	fn selectRelated sender args = (
+		
+		if args.RowIndex != -1 and args.ColumnIndex == 0 do (
+			
+			Regex = dotNetObject "System.Text.RegularExpressions.Regex" "\d+$"
+			
+			if (Regex.IsMatch dataGrid.Rows.Item[args.RowIndex].Cells.Item[0].Value) do (
+				
+				targetName = Regex.Replace dataGrid.Rows.Item[args.RowIndex].Cells.Item[0].Value ""
+				targetLayer = dataGrid.Rows.Item[args.RowIndex].Cells.Item[1].Value
+				
+				if targetName.Count >= 1 do (
+					
+					for i = 0 to (dataGrid.Rows.Count - 1) do (
+						
+						if	(Regex.IsMatch dataGrid.Rows.Item[i].Cells.Item[0].Value)  \
+						and (Regex.Replace dataGrid.Rows.Item[i].Cells.Item[0].Value "") == targetName \
+						and (dataGrid.Rows.Item[i].Cells.Item[1].Value) == targetLayer \
+						do (
+							
+							dataGrid.Rows.Item[i].Selected = true
+							
+						)
+					)
+				)
+			)
+		)
+			
+		if args.RowIndex != -1 and args.ColumnIndex == 1 do (
+			
+			targetName = dataGrid.Rows.Item[args.RowIndex].Cells.Item[1].Value
+			
+			for i = 0 to (dataGrid.Rows.Count - 1) do (
+				
+				if dataGrid.Rows.Item[i].Cells.Item[1].Value == targetName do (
+					
+					dataGrid.Rows.Item[i].Selected = true
+				
+				)
+			)
+		)
+		
+		if args.RowIndex != -1 and args.ColumnIndex == 2 do (
+			
+			targetNumber = dataGrid.Rows.Item[args.RowIndex].Cells.Item[2].Value
+			
+			for i = 0 to (dataGrid.Rows.Count - 1) do (
+				
+				if dataGrid.Rows.Item[i].Cells.Item[2].Value == targetNumber do (
+					
+					dataGrid.Rows.Item[i].Selected = true
+				
+				)
+			)
+		)
+	)
+	
 
+	dotNet.AddEventHandler dataGrid "CellFormatting" setCellColor
+	dotNet.AddEventHandler dataGrid "CellDoubleClick" selectRelated
 	dotNet.AddEventHandler collectCheckBox #CheckStateChanged colorizeButtons
-	dotNet.AddEventHandler selectedCheckBox #CheckStateChanged checkSelect
 	dotNet.AddEventHandler mmtForm #Resize resizeEvent
 	dotNet.AddEventHandler addButton "Click" (fn none = createButton unsupplied)
 	dotNet.AddEventHandler refreshButton "Click" refreshAll
@@ -766,52 +783,14 @@ global mmtForm
 		
 	)
 	
+	refreshGrid()
 	colorizeButtons()
 	
 	--release first button focus inside flowpanel on loading. purely visual!
 	flowPanel.Focus()
 
-	
 	checkMultiMatte()
-	
-	
 	mmtForm.showModeless()
 	
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
