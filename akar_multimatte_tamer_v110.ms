@@ -248,7 +248,42 @@ global mmtForm (
 		
 		if args.ColumnIndex == 2 do (
 			
-			if args.Value == 0 then (
+			if collectCheckBox.checked then (
+				
+				for i = 0 to (flowPanel.Controls.Count - 1) do (
+					
+					if ((args.Value as string) == flowPanel.Controls.Item[i].Name) do (
+						
+						if flowPanel.Controls.Item[i].BackColor.B == 135 then (
+							
+							currentColor = 3
+						
+						) else if flowPanel.Controls.Item[i].BackColor.G == 135 then (
+							
+							currentColor = 2
+							
+						) else if flowPanel.Controls.Item[i].BackColor.R == 135 then (
+							
+							currentColor = 1
+							
+						) else (
+							
+							currentColor = 0
+							
+						)
+						
+						exit
+						
+					)
+				)
+			) else (
+				
+				currentColor = args.Value
+				
+			)
+			
+			
+			if currentColor == 0 then (
 				
 				-- Neutral:
 				if int(mod args.RowIndex 2) == 0 then (
@@ -263,7 +298,7 @@ global mmtForm (
 				
 				try ( args.CellStyle.SelectionBackColor = colorClass 130 130 130 ) catch ()
 			
-			) else if int(mod args.Value 3) == 0 then (
+			) else if int(mod currentColor 3) == 0 then (
 				
 				-- Blue:
 				if int(mod args.RowIndex 2) == 0 then (
@@ -278,7 +313,7 @@ global mmtForm (
 				
 				try ( args.CellStyle.SelectionBackColor = colorClass 125 125 180 ) catch ()
 				
-			) else if int(mod (args.Value + 1) 3) == 0 then (
+			) else if int(mod (currentColor + 1) 3) == 0 then (
 				
 				-- Green:
 				if int(mod args.RowIndex 2) == 0 then (
@@ -384,6 +419,9 @@ global mmtForm (
 				)
 			)
 		)
+
+		dataGrid.Invalidate()
+		
 	)
 
 	
