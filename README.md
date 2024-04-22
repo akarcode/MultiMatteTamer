@@ -15,13 +15,21 @@ Objects are selected within the grid table. If objects and layers in your scene 
 - **Selected** will only list the selected objects in your scene.
 - **Elements** this will create the render elements based on your selection. If **Collect** is checked the elements will be created accordingly.
 
+- Double clicking inside a Cell will select either the same OID's, all items within a Layer or all related Names that end with a Number. 
+
 
 ### Requirements
 
-To create the render elements this script needs V-Ray since MultiMatteElement is part of V-Ray. Or else the 'Elements' button will be hidden.
+To create the render elements this script needs V-Ray since MultiMatteElement is part of V-Ray. Or else the 'Elements' button will be hidden but OID's can still be set.
 
 
 ### Changelog
+
+v1.1.0
+
+- rewrote the code responsible for cell coloring
+- added ability to select related by doubleclicking inside a cell
+- sorting columns is now possible
 
 v1.0.1
 
