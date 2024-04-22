@@ -27,14 +27,15 @@ To create the render elements this script needs V-Ray since MultiMatteElement is
 
 v1.1.0
 
-- rewrote the code responsible for cell coloring
-- added ability to select related by doubleclicking inside a cell
-- sorting columns is now possible
+- Rewrote the code responsible for cell coloring
+- Added ability to select related by doubleclicking inside a cell
+- Sorting columns is now possible
+- Added V-Ray Decal and Clipper to ignore list
 
 v1.0.1
 
-- fixed anchor problem
-- added a check if MultiMatte element is available and hide the 'Elements' button if not
+- Fixed anchor problem
+- Added a check if MultiMatte element is available and hide the 'Elements' button if not
 
 v1.0 (Initial release)
 
