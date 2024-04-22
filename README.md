@@ -37,3 +37,9 @@ v1.0.1
 - added a check if MultiMatte element is available and hide the 'Elements' button if not
 
 v1.0 (Initial release)
+
+
+### Notes
+
+The .NET DataGridView really slows things down. I've yet to figure out how to make this faster.
+
