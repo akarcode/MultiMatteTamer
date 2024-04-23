@@ -247,6 +247,8 @@ global mmtForm (
 	fn setCellColor sender args = (
 		
 		if args.ColumnIndex == 2 do (
+
+			currentColor = 0
 			
 			if collectCheckBox.checked then (
 				
