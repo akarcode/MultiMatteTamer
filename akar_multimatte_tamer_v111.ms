@@ -18,7 +18,7 @@ global mmtForm (
 	colorMouseOver = colorClass 56 56 56
 	
 	mmtForm = dotNetObject "maxCustomControls.MaxForm"
-	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.1.0"
+	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.1.1"
 	mmtForm.Size = dotNetObject sizeClass 826 600
 	mmtForm.MinimumSize = dotNetObject sizeClass 562 260
 	mmtForm.StartPosition = centerClass
