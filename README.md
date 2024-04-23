@@ -24,6 +24,10 @@ To create the render elements this script needs V-Ray since MultiMatteElement is
 
 ### Changelog
 
+v1.1.1
+
+- Small fix for Collect checkbox
+
 v1.1.0
 
 - Rewrote the code responsible for cell coloring
