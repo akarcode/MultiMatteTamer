@@ -29,7 +29,7 @@ v1.2.0
 - Major speed improvements
 - Added script definitions
 - Selected checkbox now refreshes the grid right away
-- Disable column sorting
+- Disabled column ordering
 
 v1.1.1
 
@@ -49,8 +49,4 @@ v1.0.1
 
 v1.0 (Initial release)
 
-
-### Notes
-
-The .NET DataGridView really slows things down. I've yet to figure out how to make this faster.
 
