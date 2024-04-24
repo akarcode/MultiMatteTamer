@@ -24,6 +24,13 @@ To create the render elements this script needs V-Ray since MultiMatteElement is
 
 ### Changelog
 
+v1.2.0
+
+- Major speed improvements
+- Added script definitions
+- Selected checkbox now refreshes the grid right away
+- Disable column sorting
+
 v1.1.1
 
 - Small fix for Collect checkbox
