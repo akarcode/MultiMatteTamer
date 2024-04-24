@@ -1,3 +1,9 @@
+macroScript akarMultiMatteTamer
+	category: "akar" 
+	toolTip: "MultiMatte Tamer v1.2.0"
+	ButtonText: "MMT"
+
+(
 global mmtForm (
 	
 	if mmtForm != undefined do mmtForm.close()
@@ -18,7 +24,7 @@ global mmtForm (
 	colorMouseOver = colorClass 56 56 56
 	
 	mmtForm = dotNetObject "maxCustomControls.MaxForm"
-	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.1.1"
+	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.2.0"
 	mmtForm.Size = dotNetObject sizeClass 826 600
 	mmtForm.MinimumSize = dotNetObject sizeClass 562 260
 	mmtForm.StartPosition = centerClass
@@ -104,7 +110,7 @@ global mmtForm (
 	dataGrid.AutoSizeColumnsMode = dataGrid.AutoSizeColumnsMode.Fill
 	dataGrid.AllowUserToResizeRows = false
 	dataGrid.AllowUserToResizeColumns = true
-	dataGrid.AllowUserToOrderColumns = true
+	dataGrid.AllowUserToOrderColumns = false
 	dataGrid.AllowUserToAddRows = false
 	dataGrid.ColumnHeadersHeight = 34
 	dataGrid.ColumnHeadersHeightSizeMode = dataGrid.ColumnHeadersHeightSizeMode.DisableResizing
@@ -116,6 +122,56 @@ global mmtForm (
 	dataGrid.ShowEditingIcon = false
 	dataGrid.ReadOnly = true
 	dataGrid.SelectionMode = dataGrid.SelectionMode.FullRowSelect
+	
+	flagNonPublic = (dotNetClass "System.Reflection.BindingFlags").NonPublic
+	flagInstance = (dotNetClass "System.Reflection.BindingFlags").Instance
+	bindingFlags = dotNet.combineEnums flagInstance flagNonPublic
+	(((dataGrid.GetType()).GetProperty "DoubleBuffered" bindingFlags).SetValue dataGrid true)
+	
+	styleRed = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
+	styleRed.BackColor = colorClass 255 225 225
+	styleRed.SelectionBackColor = colorClass 180 125 125
+	styleRed.SelectionForeColor = colorClass 255 255 255
+	styleRed.Font = dataGrid.Font
+	styleRedAlt = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
+	styleRedAlt.BackColor = colorClass 225 190 190
+	styleRedAlt.SelectionBackColor = colorClass 180 125 125
+	styleRedAlt.SelectionForeColor = colorClass 255 255 255
+	styleRedAlt.Font = dataGrid.Font
+	
+	styleGreen = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
+	styleGreen.BackColor = colorClass 225 255 225
+	styleGreen.SelectionBackColor = colorClass 125 180 125
+	styleGreen.SelectionForeColor = colorClass 255 255 255
+	styleGreen.Font = dataGrid.Font
+	styleGreenAlt = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
+	styleGreenAlt.BackColor = colorClass 190 225 190
+	styleGreenAlt.SelectionBackColor = colorClass 125 180 125
+	styleGreenAlt.SelectionForeColor = colorClass 255 255 255
+	styleGreenAlt.Font = dataGrid.Font
+	
+	styleBlue = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
+	styleBlue.BackColor = colorClass 225 225 255
+	styleBlue.SelectionBackColor = colorClass 125 125 180
+	styleBlue.SelectionForeColor = colorClass 255 255 255
+	styleBlue.Font = dataGrid.Font
+	styleBlueAlt = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
+	styleBlueAlt.BackColor = colorClass 190 190 225
+	styleBlueAlt.SelectionBackColor = colorClass 125 125 180
+	styleBlueAlt.SelectionForeColor = colorClass 255 255 255
+	styleBlueAlt.Font = dataGrid.Font
+	
+	styleNone = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
+	styleNone.BackColor = colorClass 255 255 255
+	styleNone.SelectionBackColor = colorClass 130 130 130
+	styleNone.SelectionForeColor = colorClass 255 255 255
+	styleNone.Font = dataGrid.Font
+	styleNoneAlt = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
+	styleNoneAlt.BackColor = colorClass 235 235 235
+	styleNoneAlt.SelectionBackColor = colorClass 130 130 130
+	styleNoneAlt.SelectionForeColor = colorClass 255 255 255
+	styleNoneAlt.Font = dataGrid.Font
+	
 	
 	columnNames = #("Name", "Layer", "OID")
 	
@@ -176,13 +232,13 @@ global mmtForm (
 		)
 		
 		objectSelection = for o in choiceSelection 	where ((superclassof o == shape \
-																		and o.render_renderable == true) \
-																		or superclassof o == GeometryClass \
-																		and classof o != Targetobject \
-																		and classof o != VRayDecal \
-																		and classof o != VRayClipper \
-																		and o.ishidden != true \
-																		) collect o
+													and o.render_renderable == true) \
+													or superclassof o == GeometryClass \
+													and classof o != Targetobject \
+													and classof o != VRayDecal \
+													and classof o != VRayClipper \
+													and o.ishidden != true \
+													) collect o
 		
 		objectSelection
 		
@@ -247,31 +303,61 @@ global mmtForm (
 	fn setCellColor sender args = (
 		
 		if args.ColumnIndex == 2 do (
-
-			currentColor = 0
 			
 			if collectCheckBox.checked then (
 				
 				for i = 0 to (flowPanel.Controls.Count - 1) do (
 					
-					if ((args.Value as string) == flowPanel.Controls.Item[i].Name) do (
+					if ((dataGrid.Rows.Item[args.RowIndex].Cells.Item[2].Value as string) == flowPanel.Controls.Item[i].Name) do (
 						
 						if flowPanel.Controls.Item[i].BackColor.B == 135 then (
 							
-							currentColor = 3
-						
+							-- Blue:
+							if int(mod args.RowIndex 2) == 0 then (
+								
+								args.CellStyle = styleBlue
+							
+							) else (
+								
+								args.CellStyle = styleBlueAlt
+								
+							)
 						) else if flowPanel.Controls.Item[i].BackColor.G == 135 then (
 							
-							currentColor = 2
+							-- Green:
+							if int(mod args.RowIndex 2) == 0 then (
+								
+								args.CellStyle = styleGreen
 							
+							) else (
+								
+								args.CellStyle = styleGreenAlt
+								
+							)
 						) else if flowPanel.Controls.Item[i].BackColor.R == 135 then (
 							
-							currentColor = 1
+							-- Red:
+							if int(mod args.RowIndex 2) == 0 then (
+								
+								args.CellStyle = styleRed
 							
+							) else (
+								
+								args.CellStyle = styleRedAlt
+								
+							)
 						) else (
 							
-							currentColor = 0
-							
+							-- Neutral:
+							if int(mod args.RowIndex 2) == 0 then (
+								
+								args.CellStyle = styleNone
+								
+							) else (
+								
+								args.CellStyle = styleAltNone
+								
+							)
 						)
 						
 						exit
@@ -280,74 +366,61 @@ global mmtForm (
 				)
 			) else (
 				
-				currentColor = args.Value
-				
-			)
-			
-			
-			if currentColor == 0 then (
-				
-				-- Neutral:
-				if int(mod args.RowIndex 2) == 0 then (
+				if args.Value == 0 then (
 					
-					try ( args.CellStyle.BackColor = colorClass 255 255 255 ) catch ()
+					int(mod 0 2) == 0
 					
+					-- Neutral:
+					if int(mod args.RowIndex 2) == 0 then (
+						
+						args.CellStyle = styleNone
+						
+					) else (
+						
+						args.CellStyle = styleNoneAlt
+						
+					)
+				) else if int(mod args.Value 3) == 0 then (
+					
+					-- Blue:
+					if int(mod args.RowIndex 2) == 0 then (
+						
+						args.CellStyle = styleBlue
+					
+					) else (
+						
+						args.CellStyle = styleBlueAlt
+						
+					)
+				) else if int(mod (args.Value + 1) 3) == 0 then (
+					
+					-- Green:
+					if int(mod args.RowIndex 2) == 0 then (
+						
+						args.CellStyle = styleGreen
+					
+					) else (
+						
+						args.CellStyle = styleGreenAlt
+						
+					)
 				) else (
 					
-					try ( args.CellStyle.BackColor = colorClass 235 235 235 ) catch ()
+					-- Red:
+					if int(mod args.RowIndex 2) == 0 then (
+						
+						args.CellStyle = styleRed
 					
+					) else (
+						
+						args.CellStyle = styleRedAlt
+						
+					)
 				)
-				
-				try ( args.CellStyle.SelectionBackColor = colorClass 130 130 130 ) catch ()
-			
-			) else if int(mod currentColor 3) == 0 then (
-				
-				-- Blue:
-				if int(mod args.RowIndex 2) == 0 then (
-					
-					try ( args.CellStyle.BackColor = colorClass 225 225 255 ) catch ()
-				
-				) else (
-					
-					try ( args.CellStyle.BackColor = colorClass 190 190 225 ) catch ()
-					
-				)
-				
-				try ( args.CellStyle.SelectionBackColor = colorClass 125 125 180 ) catch ()
-				
-			) else if int(mod (currentColor + 1) 3) == 0 then (
-				
-				-- Green:
-				if int(mod args.RowIndex 2) == 0 then (
-					
-					try ( args.CellStyle.BackColor = colorClass 225 255 225 ) catch ()
-				
-				) else (
-					
-					try ( args.CellStyle.BackColor = colorClass 190 225 190 ) catch ()
-					
-				)
-				
-				try ( args.CellStyle.SelectionBackColor = colorClass 125 180 125 ) catch ()
-				
-			) else (
-				
-				-- Red:
-				if int(mod args.RowIndex 2) == 0 then (
-					
-					try ( args.CellStyle.BackColor = colorClass 255 225 225 ) catch ()
-				
-				) else (
-					
-					try ( args.CellStyle.BackColor = colorClass 225 190 190 ) catch ()
-					
-				)
-				
-				try ( args.CellStyle.SelectionBackColor = colorClass 180 125 125 ) catch ()
-				
 			)
 		)
 	)
+	
 	
 	fn colorizeButtons = (
 		
@@ -421,8 +494,8 @@ global mmtForm (
 				)
 			)
 		)
-
-		dataGrid.Invalidate()
+		
+		dataGrid.InvalidateColumn 2
 		
 	)
 
@@ -803,6 +876,7 @@ global mmtForm (
 	dotNet.AddEventHandler dataGrid "CellFormatting" setCellColor
 	dotNet.AddEventHandler dataGrid "CellDoubleClick" selectRelated
 	dotNet.AddEventHandler collectCheckBox #CheckStateChanged colorizeButtons
+	dotNet.AddEventHandler selectedCheckBox #CheckStateChanged refreshAll
 	dotNet.AddEventHandler mmtForm #Resize resizeEvent
 	dotNet.AddEventHandler addButton "Click" (fn none = createButton unsupplied)
 	dotNet.AddEventHandler refreshButton "Click" refreshAll
@@ -825,12 +899,9 @@ global mmtForm (
 	
 	refreshGrid()
 	colorizeButtons()
-	
-	--release first button focus inside flowpanel on loading. purely visual!
 	flowPanel.Focus()
-
 	checkMultiMatte()
 	mmtForm.showModeless()
 	
 )
-
+)
