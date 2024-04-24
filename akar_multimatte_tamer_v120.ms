@@ -355,7 +355,7 @@ global mmtForm (
 								
 							) else (
 								
-								args.CellStyle = styleAltNone
+								args.CellStyle = styleNoneAlt
 								
 							)
 						)
