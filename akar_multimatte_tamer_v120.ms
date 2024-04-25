@@ -1,6 +1,7 @@
 macroScript akarMultiMatteTamer
 	category: "akar" 
 	toolTip: "MultiMatte Tamer v1.2.0"
+	Icon:#("Maxscript",1)
 	ButtonText: "MMT"
 
 (
