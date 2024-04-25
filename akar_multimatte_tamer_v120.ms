@@ -93,7 +93,6 @@ global mmtForm (
 	elementButton.Text = "Elements"
 	mmtForm.Controls.Add elementButton
 	
-	-- this panel is purely visual to not have a black datagridview border
 	borderPanel = dotnetobject "Panel"
 	borderPanel.Location = dotNetObject pointClass 8 94
 	borderPanel.Size = dotNetObject sizeClass 788 400
@@ -368,8 +367,6 @@ global mmtForm (
 			) else (
 				
 				if args.Value == 0 then (
-					
-					int(mod 0 2) == 0
 					
 					-- Neutral:
 					if int(mod args.RowIndex 2) == 0 then (
