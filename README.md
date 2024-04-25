@@ -14,7 +14,7 @@ Objects are selected within the grid table. If objects and layers in your scene 
 - **Collect** will make use of all RGB slots and not sequential.
 - **Selected** will only list the selected objects in your scene.
 - **Elements** this will create the render elements based on your selection. If **Collect** is checked the elements will be created accordingly.
-- Double clicking inside a Cell will select either the same OID's, all items within a Layer or all related Names that end with a Number (\d+$). 
+- **Double clicking** inside a Cell will select either the same OID's, all items within a Layer or all related Names that end with a Number (\d+$) within the corresponding column. 
 
 
 ### Requirements
@@ -23,6 +23,11 @@ To create the render elements this script needs V-Ray since MultiMatteElement is
 
 
 ### Changelog
+
+v1.2.1
+
+- Speed improvements in 'Collect' mode
+- Small code cleanups
 
 v1.2.0
 
