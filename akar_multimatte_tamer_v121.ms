@@ -1,6 +1,6 @@
 macroScript akarMultiMatteTamer
 	category: "akar" 
-	toolTip: "MultiMatte Tamer v1.2.0"
+	toolTip: "MultiMatte Tamer v1.2.1"
 	Icon:#("Maxscript",1)
 	ButtonText: "MMT"
 
@@ -25,7 +25,7 @@ global mmtForm (
 	colorMouseOver = colorClass 56 56 56
 	
 	mmtForm = dotNetObject "maxCustomControls.MaxForm"
-	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.2.0"
+	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.2.1"
 	mmtForm.Size = dotNetObject sizeClass 826 600
 	mmtForm.MinimumSize = dotNetObject sizeClass 562 260
 	mmtForm.StartPosition = centerClass
@@ -299,121 +299,109 @@ global mmtForm (
 		)
 	)
 	
-		
+	
 	fn setCellColor sender args = (
 		
-		if args.ColumnIndex == 2 do (
+		if args.columnIndex == 2 and collectCheckBox.checked then (
 			
-			if collectCheckBox.checked then (
+			if flowPanel.Controls.Item[args.Value].BackColor.B == 135 then (
 				
-				for i = 0 to (flowPanel.Controls.Count - 1) do (
+				-- Blue
+				if int(mod args.RowIndex 2) == 0 then (
 					
-					if ((dataGrid.Rows.Item[args.RowIndex].Cells.Item[2].Value as string) == flowPanel.Controls.Item[i].Name) do (
-						
-						if flowPanel.Controls.Item[i].BackColor.B == 135 then (
-							
-							-- Blue:
-							if int(mod args.RowIndex 2) == 0 then (
-								
-								args.CellStyle = styleBlue
-							
-							) else (
-								
-								args.CellStyle = styleBlueAlt
-								
-							)
-						) else if flowPanel.Controls.Item[i].BackColor.G == 135 then (
-							
-							-- Green:
-							if int(mod args.RowIndex 2) == 0 then (
-								
-								args.CellStyle = styleGreen
-							
-							) else (
-								
-								args.CellStyle = styleGreenAlt
-								
-							)
-						) else if flowPanel.Controls.Item[i].BackColor.R == 135 then (
-							
-							-- Red:
-							if int(mod args.RowIndex 2) == 0 then (
-								
-								args.CellStyle = styleRed
-							
-							) else (
-								
-								args.CellStyle = styleRedAlt
-								
-							)
-						) else (
-							
-							-- Neutral:
-							if int(mod args.RowIndex 2) == 0 then (
-								
-								args.CellStyle = styleNone
-								
-							) else (
-								
-								args.CellStyle = styleNoneAlt
-								
-							)
-						)
-						
-						exit
-						
-					)
+					args.CellStyle = styleBlue
+				
+				) else (
+					
+					args.CellStyle = styleBlueAlt
+					
+				)
+			) else if flowPanel.Controls.Item[args.Value].BackColor.G == 135 then (
+				
+				-- Green
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					args.CellStyle = styleGreen
+				
+				) else (
+					
+					args.CellStyle = styleGreenAlt
+					
+				)
+			) else if flowPanel.Controls.Item[args.Value].BackColor.R == 135 then (
+				
+				-- Red
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					args.CellStyle = styleRed
+				
+				) else (
+					
+					args.CellStyle = styleRedAlt
+					
 				)
 			) else (
 				
-				if args.Value == 0 then (
+				-- Neutral
+				if int(mod args.RowIndex 2) == 0 then (
 					
-					-- Neutral:
-					if int(mod args.RowIndex 2) == 0 then (
-						
-						args.CellStyle = styleNone
-						
-					) else (
-						
-						args.CellStyle = styleNoneAlt
-						
-					)
-				) else if int(mod args.Value 3) == 0 then (
+					args.CellStyle = styleNone
 					
-					-- Blue:
-					if int(mod args.RowIndex 2) == 0 then (
-						
-						args.CellStyle = styleBlue
-					
-					) else (
-						
-						args.CellStyle = styleBlueAlt
-						
-					)
-				) else if int(mod (args.Value + 1) 3) == 0 then (
-					
-					-- Green:
-					if int(mod args.RowIndex 2) == 0 then (
-						
-						args.CellStyle = styleGreen
-					
-					) else (
-						
-						args.CellStyle = styleGreenAlt
-						
-					)
 				) else (
 					
-					-- Red:
-					if int(mod args.RowIndex 2) == 0 then (
-						
-						args.CellStyle = styleRed
+					args.CellStyle = styleNoneAlt
 					
-					) else (
-						
-						args.CellStyle = styleRedAlt
-						
-					)
+				)
+			)
+		) else if args.columnIndex == 2 and not collectCheckBox.checked then (
+			
+			if args.Value == 0 then (
+				
+				-- Neutral
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					args.CellStyle = styleNone
+					
+				) else (
+					
+					args.CellStyle = styleNoneAlt
+					
+				)
+ 			) else if int(mod args.Value 3) == 0 then (
+				
+				-- Blue
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					args.CellStyle = styleBlue
+				
+				) else (
+					
+					args.CellStyle = styleBlueAlt
+					
+				)
+			) else if int(mod (args.Value + 1) 3) == 0 then (
+				
+				-- Green
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					args.CellStyle = styleGreen
+				
+				) else (
+					
+					args.CellStyle = styleGreenAlt
+					
+				)
+			) else (
+				
+				-- Red
+				if int(mod args.RowIndex 2) == 0 then (
+					
+					args.CellStyle = styleRed
+				
+				) else (
+					
+					args.CellStyle = styleRedAlt
+					
 				)
 			)
 		)
@@ -671,16 +659,16 @@ global mmtForm (
 					
 					
 					-- disable R and G if they are not present
+					--if flowPanel.Controls.Item[id - 1].FlatAppearance.BorderColor.R == 255 do (
 					if finditem elementArray (id - 1) == 0 do (
--- 					if flowPanel.Controls.Item[id - 1].FlatAppearance.BorderColor.R == 255 do (
 						
 						element.G_gbufID = 0
 						element.G_gbufIDOn = false
 						
 					)
 					
+					--if flowPanel.Controls.Item[id - 2].FlatAppearance.BorderColor.R == 255 do (
 					if finditem elementArray (id - 2) == 0 do (
--- 					if flowPanel.Controls.Item[id - 2].FlatAppearance.BorderColor.R == 255 do (
 						
 						element.R_gbufID = 0
 						element.R_gbufIDOn = false
@@ -708,7 +696,7 @@ global mmtForm (
 					element.G_gbufID = id
 					
 					-- disable R and B if they are not present
--- 					if flowPanel.Controls.Item[id - 1].FlatAppearance.BorderColor.R == 255 do (
+					--if flowPanel.Controls.Item[id - 1].FlatAppearance.BorderColor.R == 255 do (
 					if finditem elementArray (id - 1) == 0 do (
 						
 						element.R_gbufID = 0
@@ -716,7 +704,7 @@ global mmtForm (
 						
 					)
 					
--- 					if flowPanel.Controls.Item[id + 1].FlatAppearance.BorderColor.R == 255 do (
+					--if flowPanel.Controls.Item[id + 1].FlatAppearance.BorderColor.R == 255 do (
 					if finditem elementArray (id + 1) == 0 do (
 						
 						element.B_gbufID = 0
@@ -745,7 +733,7 @@ global mmtForm (
 					element.R_gbufID = id
 					
 					-- disable G and B if they are not present
--- 					if flowPanel.Controls.Item[id + 1].FlatAppearance.BorderColor.R == 255 do (
+					--if flowPanel.Controls.Item[id + 1].FlatAppearance.BorderColor.R == 255 do (
 					if finditem elementArray (id + 1) == 0 do (
 						
 						element.G_gbufID = 0
@@ -753,7 +741,7 @@ global mmtForm (
 						
 					)
 					
--- 					if flowPanel.Controls.Item[id + 2].FlatAppearance.BorderColor.R == 255 do (
+					--if flowPanel.Controls.Item[id + 2].FlatAppearance.BorderColor.R == 255 do (
 					if finditem elementArray (id + 2) == 0 do (
 						
 						element.B_gbufID = 0
@@ -771,10 +759,10 @@ global mmtForm (
 				re.addRenderElement (MultiMatteElement ElementName:("OID" + (mmeName as string)))
 				element = re.GetRenderElement (re.NumRenderElements() - 1)
 				
-				-- R
+				-- Red
 				element.R_gbufID = elementArray[i]
 				
-				-- G
+				-- Green
 				if i + 1 <= elementArray.Count then (
 				
 					element.G_gbufID = elementArray[i + 1]
@@ -786,7 +774,7 @@ global mmtForm (
 					
 				)
 				
-				-- B
+				-- Blue
 				if i + 2 <= elementArray.Count then (
 				
 					element.B_gbufID = elementArray[i + 2]
