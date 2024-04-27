@@ -36,7 +36,7 @@ global mmtForm (
 	collectCheckBox.Location = dotNetObject pointClass 225 9
 	collectCheckBox.Size = dotNetObject sizeClass 85 26
 	collectCheckBox.ForeColor = colorText
-	collectCheckBox.checked = true
+	collectCheckBox.checked = false
 	collectCheckBox.Text = "Collect"
 	mmtForm.Controls.Add collectCheckBox
 	
