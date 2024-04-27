@@ -1,6 +1,6 @@
 macroScript akarMultiMatteTamer
 	category: "akar" 
-	toolTip: "MultiMatte Tamer v1.2.1"
+	toolTip: "MultiMatte Tamer v1.2.2"
 	Icon:#("Maxscript",1)
 	ButtonText: "MMT"
 
@@ -11,99 +11,125 @@ global mmtForm (
 	
 	pointClass = dotNetClass "System.Drawing.Point"
 	sizeClass = dotNetClass "System.Drawing.Size"
+	paddingClass = dotNetClass "System.Windows.Forms.Padding"
 	colorClass = (dotNetClass "System.Drawing.Color").fromARGB
-	flatClass = (dotNetClass "System.Windows.Forms.FlatStyle").Flat
-	centerClass = (dotNetClass "System.Windows.Forms.FormStartPosition").CenterScreen
 	
 	colorRed = colorClass 135 100 100
 	colorGreen = colorClass 100 135 100
 	colorBlue = colorClass 100 100 135
 	colorDefault = colorClass 100 100 100
 	colorBorder = colorClass 85 85 85
-	colorBorderUsed = colorClass 255 255 255
+	colorWhite = colorClass 255 255 255
+	colorBlack = colorClass 0 0 0
 	colorText = colorClass 185 185 185
 	colorMouseOver = colorClass 56 56 56
 	
 	mmtForm = dotNetObject "maxCustomControls.MaxForm"
-	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.2.1"
-	mmtForm.Size = dotNetObject sizeClass 826 600
-	mmtForm.MinimumSize = dotNetObject sizeClass 562 260
-	mmtForm.StartPosition = centerClass
+	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.2.2"
+	mmtForm.Size = dotNetObject sizeClass 814 600
+	mmtForm.MinimumSize = dotNetObject sizeClass 682 360
+	mmtForm.StartPosition = mmtForm.StartPosition.CenterScreen
 	mmtForm.autoScroll = false
 	mmtForm.BackColor = colorClass 81 81 81
 	
 	collectCheckBox = dotNetObject "CheckBox"
-	collectCheckBox.Location = dotNetObject pointClass 238 14
+	collectCheckBox.Location = dotNetObject pointClass 225 9
 	collectCheckBox.Size = dotNetObject sizeClass 85 26
 	collectCheckBox.ForeColor = colorText
-	collectCheckBox.checked = false
+	collectCheckBox.checked = true
 	collectCheckBox.Text = "Collect"
 	mmtForm.Controls.Add collectCheckBox
 	
 	selectedCheckBox = dotNetObject "CheckBox"
-	selectedCheckBox.Location = dotNetObject pointClass 326 14
-	selectedCheckBox.Size = dotNetObject sizeClass 100 26
+	selectedCheckBox.Location = dotNetObject pointClass 310 9
+	selectedCheckBox.Size = dotNetObject sizeClass 97 26
 	selectedCheckBox.ForeColor = colorText
 	selectedCheckBox.checked = false
 	selectedCheckBox.Text = "Selected"
 	mmtForm.Controls.Add selectedCheckBox
 	
+	filterBackground = dotnetobject "FlowLayoutPanel"
+	filterBackground.Location = dotNetObject pointClass 409 5
+	filterBackground.Size = dotNetObject sizeClass 139 31
+	filterBackground.Padding = dotNetObject paddingClass 2 2 0 0
+	filterBackground.BackColor = colorWhite
+	filterBackground.BorderStyle = filterBackground.BorderStyle.None
+	mmtForm.Controls.Add filterBackground
+	
+	filterBorder = dotnetobject "FlowLayoutPanel"
+	filterBorder.Location = dotNetObject pointClass 407 3
+	filterBorder.Size = dotNetObject sizeClass 143 35
+	filterBorder.BackColor = colorBorder
+	filterBorder.BorderStyle = filterBorder.BorderStyle.None
+	mmtForm.Controls.Add filterBorder
+	
+	filterTextBox = dotNetObject "TextBox"
+	filterTextBox.Size = dotNetObject sizeClass 132 22
+	filterTextBox.BorderStyle = filterTextBox.BorderStyle.None
+	filterTextBox.AutoSize = false
+	filterTextBox.BackColor = colorWhite
+	filterBackground.Controls.Add filterTextBox
+	
 	flowPanel = dotnetobject "FlowLayoutPanel"
-	flowPanel.Location = dotNetObject pointClass 6 49
+	flowPanel.Location = dotNetObject pointClass 0 38
 	flowPanel.Size = dotNetObject sizeClass 792 0
-	flowPanel.Anchor = dotNet.CombineEnums flowPanel.Anchor.Top flowPanel.Anchor.Left flowPanel.Anchor.Right
+	flowPanel.Anchor = dotNet.CombineEnums	flowPanel.Anchor.Top \
+											flowPanel.Anchor.Left \
+											flowPanel.Anchor.Right
 	flowPanel.BackColor = colorClass 68 68 68
 	flowPanel.AutoSize = true
 	mmtForm.Controls.Add flowPanel
 	
 	addButton = dotNetObject "Button"
-	addButton.Location = dotNetObject pointClass 8 8
+	addButton.Location = dotNetObject pointClass 2 3
 	addButton.Size = dotNetObject sizeClass 106 35
 	addButton.BackColor = colorDefault
 	addButton.ForeColor = colorText
-	addButton.FlatStyle = flatClass
+	addButton.FlatStyle = addButton.FlatStyle.Flat
 	addButton.FlatAppearance.MouseOverBackColor = colorMouseOver
 	addButton.FlatAppearance.BorderColor = colorBorder
-	addButton.FlatAppearance.BorderSize = 1
+	addButton.FlatAppearance.BorderSize = 2
 	addButton.Text = "Add Button"
 	mmtForm.Controls.Add addButton
 
 	refreshButton = dotNetObject "Button"
-	refreshButton.Location = dotNetObject pointClass 118 8
+	refreshButton.Location = dotNetObject pointClass 110 3
 	refreshButton.Size = dotNetObject sizeClass 106 35
 	refreshButton.BackColor = colorDefault
 	refreshButton.ForeColor = colorText
-	refreshButton.FlatStyle = flatClass
+	refreshButton.FlatStyle = refreshButton.FlatStyle.Flat
 	refreshButton.FlatAppearance.MouseOverBackColor = colorMouseOver
 	refreshButton.FlatAppearance.BorderColor = colorBorder
-	refreshButton.FlatAppearance.BorderSize = 1
+	refreshButton.FlatAppearance.BorderSize = 2
 	refreshButton.Text = "Refresh"
 	mmtForm.Controls.Add refreshButton
 	
 	elementButton = dotNetObject "Button"
-	elementButton.Location = dotNetObject pointClass 690 8
+	elementButton.Location = dotNetObject pointClass 684 3
 	elementButton.Size = dotNetObject sizeClass 106 35
-	elementButton.Anchor = dotNet.CombineEnums elementButton.Anchor.Top elementButton.Anchor.Right
+	elementButton.Anchor = dotNet.CombineEnums	elementButton.Anchor.Top \
+												elementButton.Anchor.Right
 	elementButton.BackColor = colorDefault
 	elementButton.ForeColor = colorText
-	elementButton.FlatStyle = flatClass
+	elementButton.FlatStyle = elementButton.FlatStyle.Flat
 	elementButton.FlatAppearance.MouseOverBackColor = colorMouseOver
 	elementButton.FlatAppearance.BorderColor = colorBorder
-	elementButton.FlatAppearance.BorderSize = 1
+	elementButton.FlatAppearance.BorderSize = 2
 	elementButton.Text = "Elements"
 	mmtForm.Controls.Add elementButton
 	
 	borderPanel = dotnetobject "Panel"
-	borderPanel.Location = dotNetObject pointClass 8 94
-	borderPanel.Size = dotNetObject sizeClass 788 400
-	borderPanel.Anchor = dotNet.CombineEnums borderPanel.Anchor.Top borderPanel.Anchor.Bottom borderPanel.Anchor.Left borderPanel.Anchor.Right
-	borderPanel.Padding = dotNetObject "System.Windows.Forms.Padding" 1
+	borderPanel.Location = dotNetObject pointClass 2 77
+	borderPanel.Size = dotNetObject sizeClass 788 423
+	borderPanel.Anchor = dotNet.CombineEnums	borderPanel.Anchor.Top \
+												borderPanel.Anchor.Bottom \
+												borderPanel.Anchor.Left \
+												borderPanel.Anchor.Right
+	borderPanel.Padding = dotNetObject paddingClass 2
 	borderPanel.BackColor = colorBorder
 	mmtForm.Controls.Add borderPanel
 	
 	dataGrid = dotNetObject "DataGridView"
-	dataGrid.Location = dotNetObject pointClass 8 94
-	dataGrid.Size = dotNetObject sizeClass 788 400
 	dataGrid.BorderStyle = dataGrid.BorderStyle.None
 	dataGrid.Dock = dataGrid.Dock.Fill
 	dataGrid.RowHeadersVisible = false
@@ -114,8 +140,8 @@ global mmtForm (
 	dataGrid.AllowUserToAddRows = false
 	dataGrid.ColumnHeadersHeight = 34
 	dataGrid.ColumnHeadersHeightSizeMode = dataGrid.ColumnHeadersHeightSizeMode.DisableResizing
-	dataGrid.BackgroundColor = colorClass 255 255 255
-	dataGrid.ForeColor = colorClass 0 0 0
+	dataGrid.BackgroundColor = colorWhite
+	dataGrid.ForeColor = colorBlack
 	dataGrid.AlternatingRowsDefaultCellStyle.BackColor = colorClass 235 235 235
 	dataGrid.DefaultCellStyle.SelectionBackColor = colorClass 130 130 130
 	dataGrid.AlternatingRowsDefaultCellStyle.SelectionBackColor = colorClass 120 120 120
@@ -123,53 +149,52 @@ global mmtForm (
 	dataGrid.ReadOnly = true
 	dataGrid.SelectionMode = dataGrid.SelectionMode.FullRowSelect
 	
-	flagNonPublic = (dotNetClass "System.Reflection.BindingFlags").NonPublic
-	flagInstance = (dotNetClass "System.Reflection.BindingFlags").Instance
-	bindingFlags = dotNet.combineEnums flagInstance flagNonPublic
+	bindingFlags = dotNet.combineEnums	(dotNetClass "System.Reflection.BindingFlags").Instance \
+										(dotNetClass "System.Reflection.BindingFlags").NonPublic
 	(((dataGrid.GetType()).GetProperty "DoubleBuffered" bindingFlags).SetValue dataGrid true)
 	
 	styleRed = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
 	styleRed.BackColor = colorClass 255 225 225
 	styleRed.SelectionBackColor = colorClass 180 125 125
-	styleRed.SelectionForeColor = colorClass 255 255 255
+	styleRed.SelectionForeColor = colorWhite
 	styleRed.Font = dataGrid.Font
 	styleRedAlt = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
-	styleRedAlt.BackColor = colorClass 225 190 190
-	styleRedAlt.SelectionBackColor = colorClass 180 125 125
-	styleRedAlt.SelectionForeColor = colorClass 255 255 255
+	styleRedAlt.BackColor = colorClass 235 200 200
+	styleRedAlt.SelectionBackColor = colorClass 170 115 115
+	styleRedAlt.SelectionForeColor = colorWhite
 	styleRedAlt.Font = dataGrid.Font
 	
 	styleGreen = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
 	styleGreen.BackColor = colorClass 225 255 225
 	styleGreen.SelectionBackColor = colorClass 125 180 125
-	styleGreen.SelectionForeColor = colorClass 255 255 255
+	styleGreen.SelectionForeColor = colorWhite
 	styleGreen.Font = dataGrid.Font
 	styleGreenAlt = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
-	styleGreenAlt.BackColor = colorClass 190 225 190
-	styleGreenAlt.SelectionBackColor = colorClass 125 180 125
-	styleGreenAlt.SelectionForeColor = colorClass 255 255 255
+	styleGreenAlt.BackColor = colorClass 200 235 200
+	styleGreenAlt.SelectionBackColor = colorClass 115 170 115
+	styleGreenAlt.SelectionForeColor = colorWhite
 	styleGreenAlt.Font = dataGrid.Font
 	
 	styleBlue = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
 	styleBlue.BackColor = colorClass 225 225 255
 	styleBlue.SelectionBackColor = colorClass 125 125 180
-	styleBlue.SelectionForeColor = colorClass 255 255 255
+	styleBlue.SelectionForeColor = colorWhite
 	styleBlue.Font = dataGrid.Font
 	styleBlueAlt = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
-	styleBlueAlt.BackColor = colorClass 190 190 225
-	styleBlueAlt.SelectionBackColor = colorClass 125 125 180
-	styleBlueAlt.SelectionForeColor = colorClass 255 255 255
+	styleBlueAlt.BackColor = colorClass 200 200 235
+	styleBlueAlt.SelectionBackColor = colorClass 115 115 170
+	styleBlueAlt.SelectionForeColor = colorWhite
 	styleBlueAlt.Font = dataGrid.Font
 	
 	styleNone = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
 	styleNone.BackColor = colorClass 255 255 255
 	styleNone.SelectionBackColor = colorClass 130 130 130
-	styleNone.SelectionForeColor = colorClass 255 255 255
+	styleNone.SelectionForeColor = colorWhite
 	styleNone.Font = dataGrid.Font
 	styleNoneAlt = dotNetObject "System.Windows.Forms.DataGridViewCellStyle"
 	styleNoneAlt.BackColor = colorClass 235 235 235
-	styleNoneAlt.SelectionBackColor = colorClass 130 130 130
-	styleNoneAlt.SelectionForeColor = colorClass 255 255 255
+	styleNoneAlt.SelectionBackColor = colorClass 120 120 120
+	styleNoneAlt.SelectionForeColor = colorWhite
 	styleNoneAlt.Font = dataGrid.Font
 	
 	
@@ -412,13 +437,10 @@ global mmtForm (
 		
 		if collectCheckBox.checked == false then (
 			
-			colorArray = #(	colorRed, colorGreen, colorBlue )
-			flowCount = flowPanel.Controls.Count
-			
 			-- 0 is skipped in the loop and needs to be set separately
 			if checkUsed 0 == true then (
 				
-				flowPanel.Controls.Item[0].FlatAppearance.BorderColor = colorBorderUsed
+				flowPanel.Controls.Item[0].FlatAppearance.BorderColor = colorWhite
 				
 			) else (
 				
@@ -426,7 +448,9 @@ global mmtForm (
 				
 			)
 			
-			for i = 1 to (flowCount - 1) by 3 do (
+			colorArray = #(colorRed, colorGreen, colorBlue)
+			
+			for i = 1 to (flowPanel.Controls.Count - 1) by 3 do (
 				
 				for col in colorArray do (
 					
@@ -434,7 +458,7 @@ global mmtForm (
 					
 					if checkUsed(i) == true then (
 					
-						flowPanel.Controls.Item[i].FlatAppearance.BorderColor = colorBorderUsed
+						flowPanel.Controls.Item[i].FlatAppearance.BorderColor = colorWhite
 						
 					) else (
 						
@@ -443,7 +467,7 @@ global mmtForm (
 					)
 					
 					-- avoid overshooting the loop
-					if i < (flowCount - 1) then (
+					if i < (flowPanel.Controls.Count - 1) then (
 						
 						i += 1
 						
@@ -468,7 +492,7 @@ global mmtForm (
 				
 				if checkUsed(i) == true then (
 					
-					flowPanel.Controls.Item[i].FlatAppearance.BorderColor = colorBorderUsed
+					flowPanel.Controls.Item[i].FlatAppearance.BorderColor = colorWhite
 					flowPanel.Controls.Item[i].BackColor = colorButton usedCounter
 					usedCounter += 1 
 
@@ -486,11 +510,11 @@ global mmtForm (
 	)
 
 	
-	fn resizeEvent sender args = (
+	fn resizeEvent = (
 
-		mmtForm.MinimumSize = dotNetObject sizeClass 562 (dataGrid.Location.Y + 350)
-		borderPanel.Height = (mmtForm.Height - flowPanel.Size.Height - 119)
-		borderPanel.Location = dotNetObject pointClass 8 (flowPanel.Size.Height + 55)
+		mmtForm.MinimumSize = dotNetObject sizeClass 682 (dataGrid.Location.Y + 420)
+		borderPanel.Height = (mmtForm.Height - flowPanel.Size.Height - 96)
+		borderPanel.Location = dotNetObject pointClass 2 (flowPanel.Size.Height + 38)
 		
 	)
 	
@@ -549,12 +573,12 @@ global mmtForm (
 		newButton.FlatAppearance.BorderColor = colorBorder
 		newButton.BackColor = colorDefault
 		newButton.Size = dotNetObject sizeClass 40 35
-		newButton.ForeColor = colorBorderUsed
-		newButton.FlatStyle = flatClass
+		newButton.ForeColor = colorWhite
+		newButton.FlatStyle = newButton.FlatStyle.Flat
 		newButton.FlatAppearance.MouseOverBackColor = colorMouseOver
 		newButton.FlatAppearance.BorderSize = 2
-		newButton.Margin = dotNetObject "System.Windows.Forms.Padding" 2
-		newButton.Padding = dotNetObject "System.Windows.Forms.Padding" 0
+		newButton.Margin = dotNetObject paddingClass 2
+		newButton.Padding = dotNetObject paddingClass 0
 		newButton.Text = (value as string)
 		newButton.Name = (value as string)
 		flowPanel.Controls.Add newButton
@@ -567,9 +591,7 @@ global mmtForm (
 			
 		)
 		
-		mmtForm.MinimumSize = dotNetObject sizeClass 562 (dataGrid.Location.Y + 350)
-		borderPanel.Height = (mmtForm.Height - flowPanel.Size.Height - 119)
-		borderPanel.Location = dotNetObject pointClass 8 (flowPanel.Size.Height + 55)
+		resizeEvent()
 		
 	)
 	
@@ -635,7 +657,8 @@ global mmtForm (
 		if collectCheckBox.checked == false then (
 			
 			for id in elementArray do (
-				
+					
+				-- Blue
 				if int(mod id 3) == 0 then (
 					
 					if (re.NumRenderElements()) == 0 then (
@@ -657,24 +680,22 @@ global mmtForm (
 					
 					element.B_gbufID = id
 					
-					
 					-- disable R and G if they are not present
-					--if flowPanel.Controls.Item[id - 1].FlatAppearance.BorderColor.R == 255 do (
-					if finditem elementArray (id - 1) == 0 do (
+					if not flowPanel.Controls.Item[id - 1].FlatAppearance.BorderColor.R == 255 do (
 						
 						element.G_gbufID = 0
 						element.G_gbufIDOn = false
 						
 					)
 					
-					--if flowPanel.Controls.Item[id - 2].FlatAppearance.BorderColor.R == 255 do (
-					if finditem elementArray (id - 2) == 0 do (
+					if not flowPanel.Controls.Item[id - 2].FlatAppearance.BorderColor.R == 255 do (
 						
 						element.R_gbufID = 0
 						element.R_gbufIDOn = false
 						
 					)
-				
+					
+				-- Green
 				) else if int(mod (id + 1) 3) == 0 then (
 					
 					if (re.NumRenderElements()) == 0 then (
@@ -696,22 +717,23 @@ global mmtForm (
 					element.G_gbufID = id
 					
 					-- disable R and B if they are not present
-					--if flowPanel.Controls.Item[id - 1].FlatAppearance.BorderColor.R == 255 do (
-					if finditem elementArray (id - 1) == 0 do (
+					if not flowPanel.Controls.Item[id - 1].FlatAppearance.BorderColor.R == 255 do (
 						
 						element.R_gbufID = 0
 						element.R_gbufIDOn = false
 						
 					)
 					
-					--if flowPanel.Controls.Item[id + 1].FlatAppearance.BorderColor.R == 255 do (
-					if finditem elementArray (id + 1) == 0 do (
+					if id + 1 > flowPanel.Controls.Count - 1 \
+					or not flowPanel.Controls.Item[id + 1].FlatAppearance.BorderColor.R == 255 \
+					do (
 						
 						element.B_gbufID = 0
 						element.B_gbufIDOn = false
 						
 					)
 					
+				-- Red
 				) else (
 					
 					if (re.NumRenderElements()) == 0 then (
@@ -733,16 +755,18 @@ global mmtForm (
 					element.R_gbufID = id
 					
 					-- disable G and B if they are not present
-					--if flowPanel.Controls.Item[id + 1].FlatAppearance.BorderColor.R == 255 do (
-					if finditem elementArray (id + 1) == 0 do (
+					if id + 1 > flowPanel.Controls.Count - 1 \
+					or not flowPanel.Controls.Item[id + 1].FlatAppearance.BorderColor.R == 255 \
+					do (
 						
 						element.G_gbufID = 0
 						element.G_gbufIDOn = false
 						
 					)
 					
-					--if flowPanel.Controls.Item[id + 2].FlatAppearance.BorderColor.R == 255 do (
-					if finditem elementArray (id + 2) == 0 do (
+					if id + 2 > flowPanel.Controls.Count - 1 \
+					or not flowPanel.Controls.Item[id + 2].FlatAppearance.BorderColor.R == 255 \
+					do (
 						
 						element.B_gbufID = 0
 						element.B_gbufIDOn = false
@@ -785,7 +809,6 @@ global mmtForm (
 					element.B_gbufIDOn = false
 					
 				)
-
 				
 				if i < elementArray.Count then (
 					
@@ -797,6 +820,30 @@ global mmtForm (
 					
 				)
 			)
+		)
+	)
+	
+	
+	fn selectFilter sender args = (
+		
+		dataGrid.ClearSelection()
+
+		Regex = dotNetObject "System.Text.RegularExpressions.Regex" ("\W*(" + sender.Text + ")\W*")
+		
+		if sender.Text != "" then (
+			
+			for i = 0 to (dataGrid.Rows.Count - 1) do (
+				
+				if (Regex.IsMatch dataGrid.Rows.Item[i].Cells.Item[0].Value) do (
+					
+					dataGrid.Rows.Item[i].Selected = true
+				
+				)
+			)
+		) else (
+			
+			dataGrid.ClearSelection()
+			
 		)
 	)
 	
@@ -816,7 +863,7 @@ global mmtForm (
 					
 					for i = 0 to (dataGrid.Rows.Count - 1) do (
 						
-						if	(Regex.IsMatch dataGrid.Rows.Item[i].Cells.Item[0].Value)  \
+						if	(Regex.IsMatch dataGrid.Rows.Item[i].Cells.Item[0].Value) \
 						and (Regex.Replace dataGrid.Rows.Item[i].Cells.Item[0].Value "") == targetName \
 						and (dataGrid.Rows.Item[i].Cells.Item[1].Value) == targetLayer \
 						do (
@@ -858,13 +905,15 @@ global mmtForm (
 		)
 	)
 	
-
+	
 	dotNet.AddEventHandler dataGrid "CellFormatting" setCellColor
 	dotNet.AddEventHandler dataGrid "CellDoubleClick" selectRelated
 	dotNet.AddEventHandler collectCheckBox #CheckStateChanged colorizeButtons
 	dotNet.AddEventHandler selectedCheckBox #CheckStateChanged refreshAll
+	dotNet.AddEventHandler filterTextBox "TextChanged" selectFilter
 	dotNet.AddEventHandler mmtForm #Resize resizeEvent
-	dotNet.AddEventHandler addButton "Click" (fn none = createButton unsupplied)
+	dotNet.AddEventHandler addButton "Click" (fn _ = createButton unsupplied)
+	dotNet.AddEventHandler filterBackground "Click" (fn _ = filterTextBox.Focus())
 	dotNet.AddEventHandler refreshButton "Click" refreshAll
 	dotNet.AddEventHandler elementButton "Click" createElements
 	
