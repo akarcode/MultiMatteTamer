@@ -1,6 +1,7 @@
 # MultiMatte Tamer
 
-![multimattetamer_122_732px](https://github.com/akarcode/MultiMatteTamer/assets/59408512/3dd03791-84af-4f20-875d-6dca7a4867e0)
+![multimattetamer_122_732px](https://github.com/akarcode/MultiMatteTamer/assets/59408512/a3454696-eef3-49a8-9453-e99f40b909bd)
+
 
 This MaxScript makes it very easy to apply Object ID's and store the MultiMatte Render Elements.
 
