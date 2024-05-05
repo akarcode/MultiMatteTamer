@@ -25,6 +25,10 @@ To create the render elements this script needs V-Ray since MultiMatteElement is
 
 ### Changelog
 
+v1.2.3
+
+- Fixed reopening form error
+
 v1.2.2
 
 - Added a filter input field
