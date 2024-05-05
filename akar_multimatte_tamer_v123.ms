@@ -1,6 +1,6 @@
 macroScript akarMultiMatteTamer
 	category: "akar" 
-	toolTip: "MultiMatte Tamer v1.2.2"
+	toolTip: "MultiMatte Tamer v1.2.3"
 	Icon:#("Maxscript",1)
 	ButtonText: "MMT"
 
@@ -25,7 +25,7 @@ global mmtForm (
 	colorMouseOver = colorClass 56 56 56
 	
 	mmtForm = dotNetObject "maxCustomControls.MaxForm"
-	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.2.2"
+	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.2.3"
 	mmtForm.Size = dotNetObject sizeClass 814 600
 	mmtForm.MinimumSize = dotNetObject sizeClass 682 360
 	mmtForm.StartPosition = mmtForm.StartPosition.CenterScreen
@@ -912,6 +912,7 @@ global mmtForm (
 	dotNet.AddEventHandler selectedCheckBox #CheckStateChanged refreshAll
 	dotNet.AddEventHandler filterTextBox "TextChanged" selectFilter
 	dotNet.AddEventHandler mmtForm #Resize resizeEvent
+	dotNet.AddEventHandler mmtForm "FormClosed" (fn _ = (mmtForm = undefined))
 	dotNet.AddEventHandler addButton "Click" (fn _ = createButton unsupplied)
 	dotNet.AddEventHandler filterBackground "Click" (fn _ = filterTextBox.Focus())
 	dotNet.AddEventHandler refreshButton "Click" refreshAll
