@@ -28,7 +28,7 @@ To create the render elements this script needs V-Ray since MultiMatteElement is
 v1.2.4
 
 - Added HD mode
-- Changed setting IDs to use Node Handles instead of Names
+- Changed setting the IDs to use unique identifiers instead of Names
 
 v1.2.3
 
