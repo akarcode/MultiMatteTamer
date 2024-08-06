@@ -24,7 +24,7 @@ global mmtForm (
 	colorText = colorClass 185 185 185
 	colorMouseOver = colorClass 56 56 56
 	
-	hiRes = if int(sysInfo.DesktopSize[1]) < 1920 then true else false
+	hiRes = if int(sysInfo.DesktopSizeUnscaled[1]) > 1920 then true else false
 	
 	mmtForm = dotNetObject "maxCustomControls.MaxForm"
 	mmtForm.Text = "akar \\\\ MultiMatte Tamer v1.2.4"
